@@ -1,0 +1,23 @@
+workspace:
+  base: /go
+  path: src/github.com/udistrital/${DRONE_REPO##udistrital/}
+  when:
+    branch: [master, develop]
+    
+pipeline:
+
+  # build and test the go program
+  go:
+    image: golang:1.9
+    commands:
+     - go get -t
+     - GOOS=linux GOARCH=amd64 go build -o main
+     - go get -u gopkg.in/alecthomas/gometalinter.v1
+     - gometalinter.v1 --install
+     - go get github.com/axw/gocov/...
+     - go get github.com/AlekSi/gocov-xml
+     - go get -u github.com/jstemmer/go-junit-report
+     - gocov test ./... | gocov-xml > coverage.xml
+     - go test -v ./... | go-junit-report > test.xml
+    when:
+      branch: [master, dev]
