@@ -3,9 +3,10 @@ package controllers
 import (
 	"encoding/json"
 	"errors"
-	"github.com/udistrital/api_beego_request/models"
 	"strconv"
 	"strings"
+
+	"github.com/udistrital/api_beego_request/models"
 
 	"github.com/astaxie/beego"
 )
@@ -168,4 +169,10 @@ func (c *UsuarioController) Delete() {
 		c.Data["json"] = err.Error()
 	}
 	c.ServeJSON()
+}
+
+// funcion para test
+func Resta(num1, num2 int) (result int) {
+	result = num1 - num2
+	return
 }
