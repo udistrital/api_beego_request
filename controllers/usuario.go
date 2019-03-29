@@ -119,6 +119,8 @@ func (c *UsuarioController) GetAll() {
 			query[k] = v
 		}
 	}
+	beego.Error("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+	beego.Error("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 
 	l, err := models.GetAllUsuario(query, fields, sortby, order, offset, limit)
 	if err != nil {
