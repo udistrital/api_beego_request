@@ -1,5 +1,11 @@
 lastupdate.tmp
-api_beego_request
 .vscode/
-swagger/
+api_beego_request
 .scannerwork/
+swagger/*.png
+swagger/*.html
+swagger/*.js
+swagger/*.map
+swagger/*.css
+swagger/*.yml
+
