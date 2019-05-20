@@ -13,14 +13,14 @@ pipeline:
      - go get -t
      - GOOS=linux GOARCH=amd64 go build -o main
      - go get -u gopkg.in/alecthomas/gometalinter.v1
-     - gometalinter.v1 --install
+     - gometalinter.v2 --install
      - go get github.com/axw/gocov/...
      - go get github.com/AlekSi/gocov-xml
      - go get -u github.com/jstemmer/go-junit-report
      - echo "**** Begin integration jj tests  ****"
      - sleep 5
      - echo "**** End 01 integration jj tests  ****"
-     - gometalinter.v1 ./... --checkstyle > report.xml
+     - gometalinter.v2 ./... --checkstyle > report.xml
      - echo "**** End 02 integration jj tests  ****"
      - gocov test ./... | gocov-xml > coverage.xml
      - go test -v ./... | go-junit-report > test.xml
