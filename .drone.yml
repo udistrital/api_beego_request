@@ -8,8 +8,8 @@ pipeline:
 
   # build and test the go program ()
   go:
-    image: golang:1.9
     parallel: true
+    image: golang:1.9
     commands:
      - go get -t
      - GOOS=linux GOARCH=amd64 go build -o main
