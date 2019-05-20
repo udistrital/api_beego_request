@@ -17,7 +17,9 @@ pipeline:
      - go get github.com/axw/gocov/...
      - go get github.com/AlekSi/gocov-xml
      - go get -u github.com/jstemmer/go-junit-report
+     - echo "**** Begin integration jj tests  ****"
      - gometalinter.v1 ./... --checkstyle > report.xml
+     - echo "**** End integration jj tests  ****"
      - gocov test ./... | gocov-xml > coverage.xml
      - go test -v ./... | go-junit-report > test.xml
     when:
