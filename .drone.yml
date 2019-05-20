@@ -8,7 +8,6 @@ pipeline:
 
   # build and test the go program ()
   go:
-    parallel: true
     image: golang:1.9
     commands:
      - go get -t
