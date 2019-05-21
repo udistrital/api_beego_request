@@ -170,7 +170,7 @@ func (c *UsuarioController) Delete() {
 	c.ServeJSON()
 }
 
-// funcion para test
+// Resta función para prueba unitaria ...
 func Resta(num1, num2 int) (result int) {
 	result = num1 - num2
 	return
