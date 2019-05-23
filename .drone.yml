@@ -6,10 +6,11 @@ workspace:
     
 pipeline:
 
-  # build and test the go program ()
+  # build and test the go program
   go:
     image: golang:1.9
-    commands:180
+    command_timeout: 3m
+    script:
      - go get -t
      - GOOS=linux GOARCH=amd64 go build -o main
      - go get -u gopkg.in/alecthomas/gometalinter.v1
@@ -17,8 +18,7 @@ pipeline:
      - go get github.com/axw/gocov/...
      - go get github.com/AlekSi/gocov-xml
      - go get -u github.com/jstemmer/go-junit-report
-     #- gometalinter.v1 ./... --deadline=60s --checkstyle > report.xml
-     - gometalinter.v1 --checkstyle > report.xml
+     - gometalinter.v1 ./... --deadline=60s --checkstyle > report.xml
      - gocov test ./... | gocov-xml > coverage.xml
      - go test -v ./... | go-junit-report > test.xml
     when:
