@@ -10,7 +10,7 @@ pipeline:
   go:
     image: golang:1.9
     command_timeout: 3m
-    commands:
+    script:
      - go get -t
      - GOOS=linux GOARCH=amd64 go build -o main
      - go get -u gopkg.in/alecthomas/gometalinter.v1
