@@ -28,7 +28,7 @@ Tiene como proposito documentar el pipeline en drone para ejecutrar el marco de 
          - gocov test ./... | gocov-xml > coverage.xml
          - go test -v ./... | go-junit-report > test.xml
         when:
-          branch: [master, dev]
+          branch: [dev]
 
       # build and run sonar-scanner
       sonar-scanner:
@@ -45,7 +45,7 @@ Tiene como proposito documentar el pipeline en drone para ejecutrar el marco de 
          - cp sonar-project.properties ./sonar-scanner-$RELEASE-linux/conf/sonar-scanner.properties
          - sonar-scanner
         when:
-          branch: [master, dev]
+          branch: [dev]
 
 
 ## Licencia
