@@ -5,48 +5,50 @@ Tiene como proposito documentar el pipeline en drone para ejecutrar el marco de 
 
 ## .drone.yml
 
-    workspace:
-      base: /go
-      path: src/github.com/udistrital/${DRONE_REPO##udistrital/}
-      when:
-        branch: [master, develop]
-        
-    pipeline:
+```bash
+workspace:
+  base: /go
+  path: src/github.com/udistrital/${DRONE_REPO##udistrital/}
+  when:
+    branch: [master, develop]
+    
+pipeline:
 
-      # build and test the go program
-      go:
-        image: golang:1.9
-        command_timeout:120
-         - go get -t
-         - GOOS=linux GOARCH=amd64 go build -o main
-         - go get -u gopkg.in/alecthomas/gometalinter.v1
-         - gometalinter.v1 --install
-         - go get github.com/axw/gocov/...
-         - go get github.com/AlekSi/gocov-xml
-         - go get -u github.com/jstemmer/go-junit-report
-         #- gometalinter.v1 ./... --deadline=60s --checkstyle > report.xml
-         - gocov test ./... | gocov-xml > coverage.xml
-         - go test -v ./... | go-junit-report > test.xml
-        when:
-          branch: [dev]
+  # build and test the go program
+  go:
+    image: golang:1.9
+    command_timeout: 3m
+    script:
+      - go get -t
+      - GOOS=linux GOARCH=amd64 go build -o main
+      - go get -u gopkg.in/alecthomas/gometalinter.v1
+      - gometalinter.v1 --install
+      - go get github.com/axw/gocov/...
+      - go get github.com/AlekSi/gocov-xml
+      - go get -u github.com/jstemmer/go-junit-report
+      - gometalinter.v1 ./... --deadline=60s --checkstyle > report.xml
+      - gocov test ./... | gocov-xml > coverage.xml
+      - go test -v ./... | go-junit-report > test.xml
+    when:
+      branch: [dev]
 
-      # build and run sonar-scanner
-      sonar-scanner:
-        image: openjdk:8-alpine
-        commands:
-         - export RELEASE=3.3.0.1492
-         - apk add --no-cache  curl grep sed unzip nodejs npm
-         - curl --insecure -o ./sonarscanner.zip -L https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$RELEASE-linux.zip
-         - unzip sonarscanner.zip
-         - rm sonarscanner.zip
-         - rm -rf sonar-scanner-$RELEASE-linux/jre
-         - sed -i 's/use_embedded_jre=true/use_embedded_jre=false/g' ./sonar-scanner-$RELEASE-linux/bin/sonar-scanner
-         - export PATH=$PATH:/go/src/github.com/udistrital/${DRONE_REPO##udistrital/}/sonar-scanner-$RELEASE-linux/bin
-         - cp sonar-project.properties ./sonar-scanner-$RELEASE-linux/conf/sonar-scanner.properties
-         - sonar-scanner
-        when:
-          branch: [dev]
-
+  # build and run sonar-scanner
+  sonar-scanner:
+    image: openjdk:8-alpine
+    commands:
+      - export RELEASE=3.3.0.1492
+      - apk add --no-cache  curl grep sed unzip nodejs npm
+      - curl --insecure -o ./sonarscanner.zip -L https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$RELEASE-linux.zip
+      - unzip sonarscanner.zip
+      - rm sonarscanner.zip
+      - rm -rf sonar-scanner-$RELEASE-linux/jre
+      - sed -i 's/use_embedded_jre=true/use_embedded_jre=false/g' ./sonar-scanner-$RELEASE-linux/bin/sonar-scanner
+      - export PATH=$PATH:/go/src/github.com/udistrital/${DRONE_REPO##udistrital/}/sonar-scanner-$RELEASE-linux/bin
+      - cp sonar-project.properties ./sonar-scanner-$RELEASE-linux/conf/sonar-scanner.properties
+      - sonar-scanner
+    when:
+      branch: [dev]
+```
 
 ## Licencia
 
