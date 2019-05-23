@@ -16,7 +16,7 @@ Tiene como proposito documentar el pipeline en drone para ejecutrar el marco de 
       # build and test the go program
       go:
         image: golang:1.9
-        command_timeout:120
+        command_timeout: 3m
          - go get -t
          - GOOS=linux GOARCH=amd64 go build -o main
          - go get -u gopkg.in/alecthomas/gometalinter.v1
@@ -24,7 +24,7 @@ Tiene como proposito documentar el pipeline en drone para ejecutrar el marco de 
          - go get github.com/axw/gocov/...
          - go get github.com/AlekSi/gocov-xml
          - go get -u github.com/jstemmer/go-junit-report
-         #- gometalinter.v1 ./... --deadline=60s --checkstyle > report.xml
+         - gometalinter.v1 ./... --deadline=60s --checkstyle > report.xml
          - gocov test ./... | gocov-xml > coverage.xml
          - go test -v ./... | go-junit-report > test.xml
         when:
