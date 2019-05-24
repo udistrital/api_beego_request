@@ -34,3 +34,6 @@ func TestEndPointSuma(t *testing.T) {
 	t.Log(parameters.Endpoint_1)
 	t.Log("AAAAAAAAAAAAAAAA")
 }
+
+//https://semaphoreci.com/community/tutorials/how-to-test-in-go
+//https://golang.org/pkg/testing/#hdr-Main
