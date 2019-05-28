@@ -13,7 +13,6 @@ var parameters struct {
 }
 
 func TestMain(m *testing.M) {
-
 	parameters.Endpoint1 = os.Getenv("Endpoint1")
 	flag.Parse()
 	os.Exit(m.Run())
